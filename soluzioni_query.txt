@@ -1,0 +1,93 @@
+-- Boolean - SQL Queries (db_university)
+-- NOTE: Run `USE db_university;` first if your DB name is that.
+-- If your DB name uses a dash (e.g. `db-university`), remember to quote it with backticks: USE `db-university`;
+
+-- =====================================================================
+-- SELECT
+-- =====================================================================
+
+-- 1) Selezionare tutti gli studenti nati nel 1990 (160)
+SELECT * 
+FROM students 
+WHERE date_of_birth >= '1990-01-01' AND date_of_birth < '1991-01-01';
+
+-- 2) Selezionare tutti i corsi che valgono più di 10 CFU
+SELECT * 
+FROM courses 
+WHERE cfu > 10;
+
+-- 3) Selezionare tutti gli studenti che abbiano più di 30 anni (dinamico)
+SELECT * 
+FROM students 
+WHERE date_of_birth < DATE_SUB(CURDATE(), INTERVAL 30 YEAR);
+
+-- 4) Selezionare tutti i corsi del primo semestre del primo anno
+SELECT * 
+FROM courses 
+WHERE year = 1 AND period = 'I semestre';
+
+-- 5) Selezionare tutti gli appelli d'esame che avvengono il 20/06/2020 dopo le 14:00
+-- Se hai colonne separate `date` (DATE) e `hour` (TIME):
+SELECT * 
+FROM exams 
+WHERE `date` = '2020-06-20' AND `hour` > '14:00:00';
+
+-- In alternativa, se hai un'unica colonna DATETIME (es. `exam_datetime`):
+-- SELECT * 
+-- FROM exams 
+-- WHERE exam_datetime >= '2020-06-20 14:00:00'
+--   AND exam_datetime <  '2020-06-21 00:00:00';
+
+-- 6) Selezionare tutti i corsi di laurea magistrale
+SELECT * 
+FROM degrees 
+WHERE level = 'magistrale';
+
+-- 7) Da quanti dipartimenti è composta l'università?
+SELECT COUNT(*) AS numero_dipartimenti 
+FROM departments;
+
+-- 8) Quanti sono gli insegnanti che non hanno un numero di telefono?
+SELECT COUNT(*) AS insegnanti_senza_telefono 
+FROM teachers 
+WHERE phone IS NULL OR phone = '';
+
+
+-- =====================================================================
+-- GROUP BY
+-- =====================================================================
+
+-- 1) Contare quanti iscritti ci sono stati ogni anno
+SELECT YEAR(enrolment_date) AS anno_iscrizione, 
+       COUNT(*) AS numero_iscritti
+FROM students
+GROUP BY YEAR(enrolment_date)
+ORDER BY anno_iscrizione;
+
+-- 2) Contare gli insegnanti che hanno l'ufficio nello stesso edificio (per indirizzo pieno)
+SELECT office_address, 
+       COUNT(*) AS numero_insegnanti
+FROM teachers
+GROUP BY office_address
+ORDER BY numero_insegnanti DESC;
+
+-- 3) Calcolare la media dei voti di ogni appello d'esame
+SELECT exam_id, 
+       ROUND(AVG(vote), 2) AS media_voti
+FROM exam_student
+GROUP BY exam_id
+ORDER BY exam_id;
+
+-- 4) Contare quanti corsi di laurea ci sono per ogni dipartimento (per id)
+SELECT department_id, 
+       COUNT(*) AS numero_corsi
+FROM degrees
+GROUP BY department_id
+ORDER BY department_id;
+
+-- (Opzionale) Versione con nome del dipartimento
+-- SELECT d.name AS dipartimento, COUNT(*) AS numero_corsi
+-- FROM degrees deg
+-- JOIN departments d ON deg.department_id = d.id
+-- GROUP BY d.name
+-- ORDER BY numero_corsi DESC;
