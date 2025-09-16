@@ -1,6 +1,3 @@
--- Boolean - SQL Queries (db_university)
--- NOTE: Run `USE db_university;` first if your DB name is that.
--- If your DB name uses a dash (e.g. `db-university`), remember to quote it with backticks: USE `db-university`;
 
 -- =====================================================================
 -- SELECT
