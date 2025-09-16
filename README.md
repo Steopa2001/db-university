@@ -27,3 +27,10 @@ Consigli
 Se vi bloccate su una query, non perdeteci troppo tempo, andate avanti alle successive. Per alcune sarà necessario fare un minimo di ricerca nella documentazione
 
 ## CONSEGNA 15/09/2025
+
+## ESERCIZIO 3
+
+Utilizzando lo stesso database di ieri, eseguite le query in allegato.
+Caricate un secondo file nella stessa repo di ieri (db-university) con le query di oggi.
+
+## CONSEGNA 16/09/2025
