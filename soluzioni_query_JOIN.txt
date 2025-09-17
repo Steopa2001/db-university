@@ -8,8 +8,9 @@ WHERE d.name = 'Corso di Laurea in Economia';
 SELECT d.*
 FROM degrees AS d
 JOIN departments AS dp ON d.department_id = dp.id
-WHERE dp.name = 'Neuroscienze'
+WHERE dp.name = 'Dipartimento di Neuroscienze'
   AND LOWER(d.level) LIKE '%magistral%';
+
 
 -- 3) Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
 SELECT c.*
